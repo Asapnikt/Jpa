@@ -19,12 +19,6 @@ public class Address {
     private long id;
     @Column(name = "cityName")
     private String city;
-    @Column(name = "countryName")
-    private String country;
-    @Column(name ="streetName")
-    private String street;
-    @Column(name = "houseNumber")
-    private String houseNumber;
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;

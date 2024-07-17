@@ -7,10 +7,10 @@ import java.util.Date;
 
 @Getter
 @Setter
-@Entity(name = "orders")
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity(name = "orders")
+@Builder
 public class Order {
     @Id
     @Column
@@ -24,5 +24,4 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="service_id", nullable=false)
     private Service service;
-
 }

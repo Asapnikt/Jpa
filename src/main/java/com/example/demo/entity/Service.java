@@ -7,10 +7,10 @@ import java.util.List;
 
 @Getter
 @Setter
-@Entity(name = "service")
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity(name = "service")
+@Builder
 public class Service {
     @Id
     @Column(name = "service_id")
@@ -18,11 +18,6 @@ public class Service {
     private long id;
     @Column(name = "name")
     private String name;
-    @Column(name = "cost")
-    private float cost;
-    @Column(name = "description")
-    private String description;
-
     @OneToMany(mappedBy = "service")
     List<Order> orderList;
 }

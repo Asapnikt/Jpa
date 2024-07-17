@@ -8,9 +8,9 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "users")
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "users")
 @Builder
 public class User {
     @Id
@@ -19,16 +19,9 @@ public class User {
     private long id;
     @Column(name = "name")
     private String name;
-    @Column(name = "surname")
-    private String surname;
-    @Column(name = "gender")
-    private int gender;
-    @Column(name = "age")
-    private int age;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Address address;
-
     @OneToMany(mappedBy="user")
     List<Order> orderList;
 }
