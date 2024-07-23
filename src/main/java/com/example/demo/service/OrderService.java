@@ -17,7 +17,6 @@ public class OrderService {
         this.orderJpaRepository = orderJpaRepository;
     }
 
-
     public void saveEvents(Order order) {
         orderJpaRepository.save(order);
     }

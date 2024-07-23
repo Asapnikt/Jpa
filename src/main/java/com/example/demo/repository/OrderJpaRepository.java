@@ -6,12 +6,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public interface OrderJpaRepository extends JpaRepository<Order, Long> {
 
-    @Query(value = "select (select name from users where orders.user_id = users.user_id), count( service_id) from orders group by user_id",
+    @Query(value = "select execution_date , count(1)   from orders group by execution_date",
             nativeQuery = true)
-    List<Map<String, Long>> findByGrouping();
+   List<Object[]>  findByGrouping();
+
+    Order findByUser_Id(long id);
 }

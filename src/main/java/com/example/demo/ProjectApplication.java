@@ -6,16 +6,12 @@ import net.bytebuddy.utility.RandomString;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Calendar;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 
 @SpringBootApplication
 public class ProjectApplication {
@@ -34,56 +30,15 @@ public class ProjectApplication {
         orderService = applicationContext.getBean(OrderService.class);
         userService = applicationContext.getBean(UserService.class);
         service = applicationContext.getBean(ServicesService.class);
-//            generateDataForEvent();
+//        generateDataForEvent();
 //        generateAddress();
 //        generateServiceInfo();
-//          generateUsersInfo();
+//        generateUsersInfo();
 //        generateOrderInfo();
 //        compareLazyVsEager();
 //        getDataByGroup();
 //        getPaginationData();
     }
-
-    private void oneToOneTableOperation() {
-        Events events = Events.builder()
-                .description("Праздник, который символизирует начала года")
-                .name("Новый год")
-                .finishDate(new Calendar.Builder().setDate(2022, 0, 1).build())
-                .startDate(new Calendar.Builder().setDate(2021, 11, 31).build())
-                .build();
-
-        //save
-        eventsService.saveEvents(events);
-        //edit
-        events.getFinishDate().set(Calendar.YEAR, 2023);
-        eventsService.editEvents(events);
-        //get
-        eventsService.getAllEvents();
-        //delete
-        eventsService.deleteEvents(events);
-    }
-
-    private static void compareLazyVsEager() {
-        //Lazy vs Eager
-        var startTime = System.currentTimeMillis();
-        orderService.getAllEvents();
-        var endTime = System.currentTimeMillis();
-        System.out.println("execution time: " + (endTime - startTime));
-    }
-
-    private static void getDataByGroup() {
-//        var group = orderService.getAllEvents().stream()
-//                .collect(Collectors.groupingBy(order -> order.getUser().getName(), Collectors.counting()));
-//
-                orderService.getValueByGrouping();
-    }
-
-    private static void getPaginationData() {
-        Pageable pageParam = PageRequest.of(1, 5);
-        var info = addressService.getAddressWithPagination(pageParam);
-        info.get().forEach(address -> System.out.println(address.getCity() + ' ' + address.getCountry() + ' ' + address.getHouseNumber()));
-    }
-
     private static void generateDataForEvent() {
         int i = 0;
         LocalDate start = LocalDate.of(1989, Month.OCTOBER, 14);
@@ -92,9 +47,7 @@ public class ProjectApplication {
             LocalDate random = between(start, end);
             Events event = Events.builder()
                     .description("Праздник " + i)
-                    .name("Дни рождения " + random)
-                    .startDate(new Calendar.Builder().setDate(random.getYear(), random.getMonth().getValue(), random.getDayOfMonth()).build())
-                    .finishDate((new Calendar.Builder().setDate(random.getYear(), random.getMonth().getValue(), random.getDayOfMonth()).build())).build();
+                    .name("Дни рождения " + random).build();
             eventsService.saveEvents(event);
             i++;
         }
@@ -103,13 +56,10 @@ public class ProjectApplication {
     private static void generateAddress() {
         int i = 0;
         var minValue = userService.getMinUserId();
-        while (i != 100) {
+        while (i != 10000) {
             var user = userService.getUser(minValue++);
             var address = Address.builder()
                     .city(getRandomString())
-                    .country(getRandomString())
-                    .houseNumber(Integer.toString(i))
-                    .street(getRandomString())
                     .user(user)
                     .build();
 
@@ -121,12 +71,9 @@ public class ProjectApplication {
     private static void generateUsersInfo() {
         int i = 0;
         Random random = new Random();
-        while (i != 100) {
+        while (i != 10000) {
             var user = User.builder()
-                    .gender(random.nextInt(2))
                     .name(getRandomString())
-                    .surname(getRandomString())
-                    .age(random.nextInt(100))
                     .build();
             userService.saveUser(user);
             i++;
@@ -136,11 +83,9 @@ public class ProjectApplication {
     private static void generateServiceInfo() {
         Random random = new Random();
         int i = 0;
-        while (i != 100) {
+        while (i != 10000) {
             var serviceInfo = Service.builder()
-                    .cost(random.nextFloat())
                     .name(getRandomString())
-                    .description(getRandomString())
                     .build();
             service.save(serviceInfo);
             i++;

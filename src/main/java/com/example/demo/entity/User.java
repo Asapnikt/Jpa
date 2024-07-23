@@ -22,6 +22,6 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Address address;
-    @OneToMany(mappedBy="user")
+    @OneToMany(mappedBy = "user")
     List<Order> orderList;
 }

@@ -18,6 +18,6 @@ public class Service {
     private long id;
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "service")
+    @OneToMany(mappedBy = "service", fetch = FetchType.EAGER)
     List<Order> orderList;
 }
